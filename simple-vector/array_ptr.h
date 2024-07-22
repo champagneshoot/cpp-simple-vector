@@ -5,7 +5,8 @@
 #include <utility>
 
 template <typename Type>
-class ArrayPtr {
+class ArrayPtr 
+{
 public:
     // Инициализирует ArrayPtr нулевым указателем
     ArrayPtr() noexcept = default;
