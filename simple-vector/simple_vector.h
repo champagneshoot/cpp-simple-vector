@@ -21,7 +21,8 @@ ReserveProxyObj Reserve(size_t capacity_to_reserve)
 }
 
 template <typename Type>
-class SimpleVector {
+class SimpleVector 
+{
 public:
     using Iterator = Type*;
     using ConstIterator = const Type*;
@@ -102,7 +103,7 @@ public:
         {
             size_t new_capacity = (capacity_ == 0) ? 1 : capacity_ * 2;
             ArrayPtr<Type> temp(new_capacity);
-            std::move(begin(), begin() + pos_index, temp.Get()); // Используем перемещение
+            std::move(begin(), begin() + pos_index, temp.Get()); 
             temp[pos_index] = value;
             std::move(begin() + pos_index, end(), temp.Get() + pos_index + 1); 
             items_.swap(temp);
@@ -110,7 +111,7 @@ public:
         } 
         else 
         {
-            std::move_backward(begin() + pos_index, end(), end() + 1); // Используем перемещение
+            std::move_backward(begin() + pos_index, end(), end() + 1); 
             items_[pos_index] = value;
         }
         ++size_;
@@ -332,6 +333,7 @@ inline bool operator>(const SimpleVector<Type>& lhs, const SimpleVector<Type>& r
 }
 
 template <typename Type>
-inline bool operator>=(const SimpleVector<Type>& lhs, const SimpleVector<Type>& rhs) {
+inline bool operator>=(const SimpleVector<Type>& lhs, const SimpleVector<Type>& rhs) 
+{
     return !(rhs > lhs);
 }
