@@ -12,7 +12,6 @@ public:
     ArrayPtr() noexcept = default;
 
     // Создаёт в куче массив из size элементов типа Type.
-    // Если size == 0, поле raw_ptr_ должно быть равно nullptr
     explicit ArrayPtr(size_t size)
     {
         if (size == 0)
@@ -27,14 +26,12 @@ public:
 
     // Конструктор из сырого указателя, хранящего адрес массива в куче либо nullptr
     explicit ArrayPtr(Type* raw_ptr) noexcept
-        : raw_ptr_(raw_ptr)
-    {
-    }
+        : raw_ptr_(raw_ptr){}
 
     ArrayPtr(ArrayPtr&& other) noexcept
-        : raw_ptr_(other.raw_ptr_)
     {
-        other.raw_ptr_ = nullptr;
+        swap(other);
+        //other.raw_ptr_ = nullptr;
     }
 
     ~ArrayPtr()
@@ -47,9 +44,8 @@ public:
     {
         if (this != &other)
         {
-            delete[] raw_ptr_;
-            raw_ptr_ = other.raw_ptr_;
-            other.raw_ptr_ = nullptr;
+            ArrayPtr tmp(std::move(other));
+            swap(tmp);
         }
         return *this;
     }
@@ -93,11 +89,10 @@ public:
     // Обменивается значениями указателя на массив с объектом other
     void swap(ArrayPtr& other) noexcept
     {
-        using std::swap;
-        swap(raw_ptr_, other.raw_ptr_);
+        //using std::swap;
+        std::swap(raw_ptr_, other.raw_ptr_);
     }
 
 private:
     Type* raw_ptr_ = nullptr; // указатель на массив в динамической памяти 
 };
-
