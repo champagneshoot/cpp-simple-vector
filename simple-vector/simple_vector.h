@@ -166,9 +166,9 @@ public:
 
     Iterator Erase(ConstIterator pos)
     {
-        auto pos_index = pos - begin();
         assert(pos - begin() >= 0);
         assert(pos - end() <= 0);
+        auto pos_index = pos - begin();
         std::move(begin() + pos_index + 1, end(), begin() + pos_index);
         --size_;
         return begin() + pos_index;
